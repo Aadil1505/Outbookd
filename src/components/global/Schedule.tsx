@@ -10,6 +10,7 @@ import { addDays, differenceInMinutes, endOfDay, format, getMonth, getYear, isSa
 import { Calendar, ChevronLeft, ChevronRight, Clock, Mail, Phone, User, Users } from 'lucide-react'
 import { useCallback, useMemo, useState } from 'react'
 
+// Change to fetch events for a specific day only when that day is clicked
 
 function EventDialog({ event }: { event: Event }) {
   return (
