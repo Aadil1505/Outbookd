@@ -1,14 +1,14 @@
 "use client"
 
-import React, { useState, useMemo, useCallback } from 'react'
-import { addDays, format, isSameDay, isSameMonth, parseISO, startOfWeek, startOfDay, endOfDay, isWithinInterval, differenceInMinutes, setMonth, getMonth, getYear } from 'date-fns'
-import { Calendar, ChevronLeft, ChevronRight, Users, Clock, User, Phone, Mail } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
 import { Event } from '@/types'
+import { addDays, differenceInMinutes, endOfDay, format, getMonth, getYear, isSameDay, isSameMonth, parseISO, setMonth, startOfDay, startOfWeek } from 'date-fns'
+import { Calendar, ChevronLeft, ChevronRight, Clock, Mail, Phone, User, Users } from 'lucide-react'
+import { useCallback, useMemo, useState } from 'react'
 
 
 function EventDialog({ event }: { event: Event }) {
