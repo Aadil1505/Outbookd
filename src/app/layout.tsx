@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/global/ThemeProvider";
 import Navbar from "@/components/global/Navbar";
 
@@ -31,7 +30,6 @@ export default function RootLayout({
             {children}
           </TooltipProvider>
         </main>
-        <Toaster />
       </ThemeProvider>
       </body>
     </html>
