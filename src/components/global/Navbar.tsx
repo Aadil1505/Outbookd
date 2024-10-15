@@ -3,7 +3,7 @@ import { Menu, User, LogOut, LogIn } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import ModeToggle from "@/components/global/ModeToggle"
-import { auth, signOut, signIn } from "@/auth"
+import { auth, signOut } from "@/auth"
 import {
   DropdownMenu,
   DropdownMenuContent,

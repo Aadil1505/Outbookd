@@ -1,14 +1,13 @@
-import { auth, signIn, signOut } from "@/auth"
- 
+import { auth, signIn } from "@/auth"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { redirect } from "next/navigation"
 
 export default async function GoogleSignIn() {
 
   const session = await auth()
   const user = session?.user
-  const role = user?.role
+  // const role = user?.role
 
   if (user) {
     redirect('/')
