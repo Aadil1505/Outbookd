@@ -10,8 +10,6 @@ import { addDays, differenceInMinutes, endOfDay, format, getMonth, getYear, isSa
 import { Calendar, ChevronLeft, ChevronRight, Clock, Mail, Phone, User, Users } from 'lucide-react'
 import { useCallback, useMemo, useState } from 'react'
 
-// Change to fetch events for a specific day only when that day is clicked
-
 function EventDialog({ event }: { event: Event }) {
   return (
     <Dialog>
@@ -93,12 +91,12 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
     return (
       <button
         key={dayIndex}
-        className={`p-2 text-center transition-colors rounded-lg hover:bg-gray-100 ${
+        className={`p-2 text-center transition-colors rounded-lg hover:bg-secondary ${
           isSelected
             ? 'bg-accent text-accent-foreground'
             : isToday
             && 'bg-green-300 text-accent-foreground'
-        } ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}`}
+        } ${isCurrentMonth ? 'text-foreground' : 'text-muted-foreground'}`}
         onClick={() => setSelectedDate(day)}
       >
         <div className="text-xs sm:text-sm font-medium">{format(day, 'EEE')}</div>
@@ -155,8 +153,8 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
     <div className="flex flex-col h-screen bg-background px-4 sm:px-6 lg:px-8 py-6 rounded-md max-w-full mx-auto">
       <header className="flex flex-col sm:flex-row items-center justify-between mb-4">
         <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-          <Calendar className="h-5 w-5 text-gray-600" />
-          <h1 className="text-xl font-bold text-gray-800">{format(currentDate, 'MMMM yyyy')}</h1>
+          <Calendar className="h-5 w-5 text-muted-foreground" />
+          <h1 className="text-xl font-bold text-foreground">{format(currentDate, 'MMMM yyyy')}</h1>
         </div>
         <div className="flex items-center space-x-2">
           <Button variant="outline" size="sm" onClick={changeWeek(-7)} aria-label="Previous week">
@@ -186,12 +184,12 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
       </div>
 
       <div className="flex-1 overflow-hidden">
-        <div className="sticky top-0 z-20 bg-gray-50 px-4 py-2 text-sm font-semibold border-b border-gray-200 flex justify-between items-center">
+        <div className="sticky top-0 z-20 bg-secondary px-4 py-2 text-sm font-semibold border-b border-border flex justify-between items-center">
           <div className="flex items-center">
             <Clock className="h-4 w-4 mr-2" />
             {format(selectedDate, 'EEEE, MMMM d')}
           </div>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-muted-foreground">
             <Users className="inline-block h-4 w-4 mr-1" />
             <span>{dayEvents.length} {dayEvents.length === 1 ? 'appointment' : 'appointments'}</span>
           </div>
@@ -209,7 +207,7 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
                 dayEvents.map(renderEvent)
               ) : (
                 <TableRow>
-                  <TableCell colSpan={2} className="text-center py-4 text-gray-500">
+                  <TableCell colSpan={2} className="text-center py-4 text-muted-foreground">
                     No events scheduled for this day.
                   </TableCell>
                 </TableRow>
