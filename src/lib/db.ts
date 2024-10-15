@@ -1,15 +1,11 @@
-import { PrismaClient } from "@prisma/client"
-
-const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
-
-declare global {
-  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
-}
-
-const db = globalThis.prisma ?? prismaClientSingleton()
-
-export default db
-
-if (process.env.NODE_ENV !== "production") globalThis.prisma = db
+import { Pool } from "pg"
+ 
+export const db = new Pool({
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+})

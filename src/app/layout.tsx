@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/global/ThemeProvider";
+import Navbar from "@/components/global/Navbar";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,14 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}
-      >
-      <main className="min-h-screen">
-        <TooltipProvider>
-          {children}
-        </TooltipProvider>
-      </main>
+      <body className={`${inter.className} antialiased`}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <main className="min-h-screen">
+          <TooltipProvider>
+            <Navbar/>
+            {children}
+          </TooltipProvider>
+        </main>
+        <Toaster />
+      </ThemeProvider>
       </body>
     </html>
   );
