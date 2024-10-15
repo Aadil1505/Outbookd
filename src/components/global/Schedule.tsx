@@ -107,11 +107,11 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
         </div>
       </button>
     )
-  }, [weekStart, currentDate, selectedDate, events])
+  }, [weekStart, currentDate, selectedDate])
 
-  const getEventsForDay = useCallback(() => {
-    const dayStart = startOfDay(selectedDate)
-    const dayEnd = endOfDay(selectedDate)
+  const getEventsForDay = useCallback((date: Date) => {
+    const dayStart = startOfDay(date)
+    const dayEnd = endOfDay(date)
     return events
       .filter(event => {
         const eventStart = parseISO(event.start)
@@ -121,7 +121,7 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
                (eventStart < dayStart && eventEnd > dayEnd)
       })
       .sort((a, b) => parseISO(a.start).getTime() - parseISO(b.start).getTime())
-  }, [selectedDate, events])
+  }, [events])
 
   const renderEvent = useCallback((event: Event) => {
     const startDate = parseISO(event.start)
@@ -149,7 +149,7 @@ export default function WorkerCalendar({ events }: { events: Event[] }) {
     )
   }, [selectedDate])
 
-  const dayEvents = useMemo(() => getEventsForDay(), [getEventsForDay])
+  const dayEvents = useMemo(() => getEventsForDay(selectedDate), [getEventsForDay, selectedDate])
 
   return (
     <div className="flex flex-col h-screen bg-background px-4 sm:px-6 lg:px-8 py-6 rounded-md max-w-full mx-auto">

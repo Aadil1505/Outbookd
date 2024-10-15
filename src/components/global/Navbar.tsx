@@ -4,12 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import ModeToggle from "@/components/global/ModeToggle"
 import { auth, signOut } from "@/auth"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default async function Navbar() {
@@ -18,10 +13,8 @@ export default async function Navbar() {
 
   const navItems = [
     {id: 1, path: "/", name: "Home"},
-    {id: 2, path: "/search", name: "Search"},
-    {id: 3, path: "/student", name: "Add Student"},
-    {id: 4, path: "/employee", name: "Add Employee"},
-    {id: 5, path: "/training", name: "Add Training"}
+    {id: 2, path: "/book", name: "Book"},
+    {id: 3, path: "/appointments", name: "Appointments"},
   ]
 
   return (
@@ -119,7 +112,7 @@ export default async function Navbar() {
                       <SheetClose asChild key={item.id}>
                         <Link
                           href={item.path}
-                          className="block py-2 text-base font-medium text-muted-foreground hover:text-foreground"
+                          className="block py-2 text-base font-medium text-muted-foreground hover:text-foreground pl-2 border-l-2 border-transparent hover:border-primary"
                         >
                           {item.name}
                         </Link>
