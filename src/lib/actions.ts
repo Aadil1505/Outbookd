@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
 import { db } from "./db";
 import { Appointment } from "@/types";
 
@@ -67,3 +68,9 @@ export async function getClientAppointments(clientId: string, limit = 10): Promi
     throw new Error("Could not retrieve client appointments");
   }
 }
+
+
+
+
+
+

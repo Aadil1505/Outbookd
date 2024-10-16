@@ -12,7 +12,6 @@ export type Event = {
 
 
 // Types used throughout the application
-
 export type Appointment = {
     id: number;
     date: string;
