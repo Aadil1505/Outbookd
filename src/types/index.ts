@@ -17,12 +17,6 @@ export type Appointment = {
     id: number;
     date: string;
     status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
-    service: {
-      id: number;
-      name: string;
-      price: number;
-      duration: number;
-    };
     shop: {
       id: number;
       name: string;
@@ -37,4 +31,10 @@ export type Appointment = {
       name: string;
       email: string;
     };
+    services: {
+      id: number;
+      name: string;
+      price: number;
+      duration: number;
+    }[];
   };

@@ -1,7 +1,7 @@
 import { auth } from '@/auth';
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAppointments } from "@/lib/actions";
+import { getClientAppointments } from "@/lib/actions";
 import { Appointment } from "@/types";
 import { Clock, DollarSign, Scissors, Store, User } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
@@ -15,7 +15,7 @@ export default async function Page() {
     redirect('/login')
   }
 
-  const appointments: Appointment[] = await getAppointments(user.id) || []
+  const appointments: Appointment[] = await getClientAppointments(user.id) || []
   console.log(appointments)
   revalidatePath('/appointments')
 
@@ -34,31 +34,37 @@ export default async function Page() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 pb-2 px-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center text-sm font-semibold">
-                    <Scissors className="w-4 h-4 mr-2 text-primary" />
-                    <span>{appointment.service.name}</span>
+                {appointment.services.map((service, index) => (
+                  <div key={service.id} className={`flex flex-col ${index > 0 ? 'mt-2' : ''}`}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center text-sm font-semibold">
+                        <Scissors className="w-4 h-4 mr-2 text-primary" />
+                        <span>{service.name}</span>
+                      </div>
+                      <div className="flex items-center text-xs text-primary">
+                        <Clock className="w-3 h-3 mr-1" />
+                        <span>{service.duration} minutes</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span>${service.price.toFixed(2)}</span>
+                      {index === 0 && (
+                        <span>
+                          {new Date(appointment.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - 
+                          {new Date(new Date(appointment.date).getTime() + appointment.services.reduce((total, s) => total + s.duration, 0) * 60000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center text-xs text-primary">
-                    <Clock className="w-3 h-3 mr-1" />
-                    <span>
-                      {new Date(appointment.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - 
-                      {new Date(new Date(appointment.date).getTime() + appointment.service.duration * 60000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-1 text-xs">
+                ))}
+                <div className="space-y-1 text-xs mt-2">
                   <div className="flex items-center">
                     <Store className="w-3 h-3 mr-2 text-primary" />
                     <span>{appointment.shop.name}</span>
                   </div>
                   <div className="flex items-center">
                     <DollarSign className="w-3 h-3 mr-2 text-primary" />
-                    <span>${appointment.service.price}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 mr-2 text-primary" />
-                    <span>{appointment.service.duration} minutes</span>
+                    <span>Total: ${appointment.services.reduce((total, service) => total + service.price, 0).toFixed(2)}</span>
                   </div>
                   <div className="flex items-center">
                     <User className="w-3 h-3 mr-2 text-primary" />
