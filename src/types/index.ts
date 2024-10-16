@@ -9,3 +9,32 @@ export type Event = {
     clientEmail: string
     notes: string
 }
+
+
+// Types used throughout the application
+
+export type Appointment = {
+    id: number;
+    date: string;
+    status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
+    service: {
+      id: number;
+      name: string;
+      price: number;
+      duration: number;
+    };
+    shop: {
+      id: number;
+      name: string;
+    };
+    staff: {
+      id: number;
+      name: string;
+      email: string;
+    };
+    client: {
+      id: number;
+      name: string;
+      email: string;
+    };
+  };
