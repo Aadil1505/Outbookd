@@ -3,6 +3,7 @@
 import { db } from "./db";
 import { Appointment } from "@/types";
 
+// Displayed to the client, 10 most recent appointments, with the services
 export async function getClientAppointments(clientId: string, limit = 10): Promise<Appointment[]> {
   try {
     const query = `
