@@ -55,9 +55,6 @@ export default function BookingForm() {
     )
   }
 
-  const [date, setDate] = useState<Date | undefined>(new Date())
-
-
   const totalPrice = selectedServices.reduce((total, service) => total + service.price, 0)
 
   const isBookingComplete = selectedStaff && selectedDate && selectedTime && selectedServices.length > 0
@@ -94,9 +91,8 @@ export default function BookingForm() {
           </CardHeader>
           <CardContent className="space-y-4 p-0">
           <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
+            selected={selectedDate}
+            onSelect={handleDateSelect}
             className="h-full w-full flex"
             classNames={{
               months:
@@ -105,8 +101,6 @@ export default function BookingForm() {
               table: "w-full h-full border-collapse space-y-1",
               head_row: "",
               row: "w-full mt-2",
-              cell: 
-                "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
             }}
           />
             {selectedDate && (
