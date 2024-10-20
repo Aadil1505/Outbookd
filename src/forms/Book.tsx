@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
@@ -16,16 +16,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
@@ -101,33 +98,26 @@ export default function AppointmentForm() {
                     <FormItem>
                       <FormControl>
                         <ScrollArea className="h-[300px] w-full rounded-md border p-4">
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="grid grid-cols-2 gap-4"
-                          >
+                          <div className="grid gap-2">
                             {stylists.map((stylist) => (
-                              <FormItem key={stylist.id}>
-                                <FormControl>
-                                  <RadioGroupItem
-                                    value={stylist.id}
-                                    id={stylist.id}
-                                    className="peer sr-only"
-                                  />
-                                </FormControl>
-                                <FormLabel
-                                  htmlFor={stylist.id}
-                                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer transition-all duration-300 ease-in-out"
-                                >
-                                  <Avatar className="w-16 h-16 mb-2">
-                                    <AvatarImage src={stylist.avatar} alt={stylist.name} />
-                                    <AvatarFallback>{stylist.initials}</AvatarFallback>
-                                  </Avatar>
-                                  <span className="text-lg font-medium">{stylist.name}</span>
-                                </FormLabel>
-                              </FormItem>
+                              <Button
+                                key={stylist.id}
+                                type="button"
+                                variant={field.value === stylist.id ? "default" : "outline"}
+                                className={cn(
+                                  "w-full h-3/4 justify-start text-left font-normal",
+                                  field.value === stylist.id ? "bg-primary text-primary-foreground" : "hover:bg-accent hover:text-accent-foreground"
+                                )}
+                                onClick={() => field.onChange(stylist.id)}
+                              >
+                                <Avatar className="w-8 h-8 mr-2">
+                                  <AvatarImage src={stylist.avatar} alt={stylist.name} />
+                                  <AvatarFallback>{stylist.initials}</AvatarFallback>
+                                </Avatar>
+                                {stylist.name}
+                              </Button>
                             ))}
-                          </RadioGroup>
+                          </div>
                         </ScrollArea>
                       </FormControl>
                       <FormMessage />
@@ -219,47 +209,35 @@ export default function AppointmentForm() {
                 <FormField
                   control={form.control}
                   name="services"
-                  render={() => (
+                  render={({ field }) => (
                     <FormItem>
-                      <ScrollArea className="h-[300px] w-full rounded-md border p-4">
-                        <div className="grid gap-4">
-                          {services.map((service) => (
-                            <FormField
-                              key={service.id}
-                              control={form.control}
-                              name="services"
-                              render={({ field }) => {
-                                return (
-                                  <FormItem
-                                    key={service.id}
-                                    className="flex flex-row items-center space-x-3 space-y-0"
-                                  >
-                                    <FormControl>
-                                      <Checkbox
-                                        checked={field.value?.includes(service.id)}
-                                        onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([...field.value, service.id])
-                                            : field.onChange(
-                                                field.value?.filter(
-                                                  (value) => value !== service.id
-                                                )
-                                              )
-                                        }}
-                                      />
-                                    </FormControl>
-                                    <FormLabel className="text-lg flex items-center space-x-2 cursor-pointer">
-                                      <service.icon className="w-6 h-6 text-primary" />
-                                      <span>{service.name}</span>
-                                      <Badge variant="secondary" className="ml-auto">${service.price}</Badge>
-                                    </FormLabel>
-                                  </FormItem>
-                                )
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </ScrollArea>
+                      <FormControl>
+                        <ScrollArea className="h-[300px] w-full rounded-md border p-4">
+                          <div className="grid gap-2">
+                            {services.map((service) => (
+                              <Button
+                                key={service.id}
+                                type="button"
+                                variant={field.value.includes(service.id) ? "default" : "outline"}
+                                className={cn(
+                                  "w-full h-3/4 justify-start text-left font-normal",
+                                  field.value.includes(service.id) ? "bg-primary text-primary-foreground" : "hover:bg-accent hover:text-accent-foreground"
+                                )}
+                                onClick={() => {
+                                  const updatedServices = field.value.includes(service.id)
+                                    ? field.value.filter(id => id !== service.id)
+                                    : [...field.value, service.id];
+                                  field.onChange(updatedServices);
+                                }}
+                              >
+                                <service.icon className="mr-2 h-4 w-4" />
+                                <span className="flex-grow">{service.name}</span>
+                                <Badge variant="secondary" className="ml-2">${service.price}</Badge>
+                              </Button>
+                            ))}
+                          </div>
+                        </ScrollArea>
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -312,7 +290,6 @@ export default function AppointmentForm() {
                     <ul className="space-y-2">
                       {selectedServices.length > 0 ? selectedServices.map((service) => (
                         <li key={service.id} className="flex items-center justify-between bg-accent/10 p-2 rounded-md">
-                          
                           <span className="flex items-center space-x-2">
                             <service.icon className="w-5 h-5 text-primary" />
                             <span>{service.name}</span>
@@ -322,7 +299,7 @@ export default function AppointmentForm() {
                       )): <div className="flex items-center justify-center">No services selected</div>}
                     </ul>
                   </ScrollArea>
-                  <div className="flex justify-between items-center text-xl font-bold mt-4 p-2 bg-primary/10 rounded-lg">
+                  <div className="flex justify-between items-center text-xl font-bold mt-4 p-2  bg-primary/10 rounded-lg">
                     <span>Total:</span>
                     <span>${total}</span>
                   </div>
