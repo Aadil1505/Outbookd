@@ -4,7 +4,6 @@ import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/global/ThemeProvider";
 import Navbar from "@/components/global/Navbar";
-import { Toaster } from "@/components/ui/toaster"
 
 
 const inter = Inter({
@@ -32,7 +31,6 @@ export default function RootLayout({
             {children}
           </TooltipProvider>
         </main>
-        <Toaster />
       </ThemeProvider>
       </body>
     </html>

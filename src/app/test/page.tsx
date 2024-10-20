@@ -1,15 +1,22 @@
 "use client"
 
-import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { format } from "date-fns"
+import { CalendarIcon, CheckCircle, Clock, Droplet, Footprints, HandMetal, Palette, Scissors } from "lucide-react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { format } from "date-fns"
-import { CalendarIcon, Scissors, Droplet, Palette, HandMetal, Footprints, Clock, CheckCircle } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -18,17 +25,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { cn } from "@/lib/utils"
 
 const stylists = [
   { id: "jd", name: "John Doe", initials: "JD", avatar: "/placeholder.svg?height=40&width=40" },
